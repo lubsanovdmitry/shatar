@@ -10,4 +10,8 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .idea
-cmake-build-*
+build/
+cmake/open-cpp-coverage.cmake
+cmake-build-*/
+prefix/
+
