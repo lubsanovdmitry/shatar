@@ -6,6 +6,7 @@
 #define SHATAR_BOARD_H
 
 #include <array>
+#include <string_view>
 
 #include "Bitboard.h"
 
@@ -33,6 +34,8 @@ class Board {
 public:
 
     Board() = default;
+
+    Board(std::string_view sv);
 
     constexpr bool operator==(const Board &other) const {
         return _pieces == other._pieces;
