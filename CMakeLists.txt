@@ -4,10 +4,11 @@ project(
     Shatar
     VERSION 0.1.0
     DESCRIPTION "Shatar chess"
+    HOMEPAGE_URL "https://github.com/lubsanovdmitry/shatar"
     LANGUAGES CXX
 )
 
-add_executable(shatar_exe source/main.cpp source/Bitboard.cpp source/Bitboard.h)
+add_executable(shatar_exe source/main.cpp source/Bitboard.cpp source/Bitboard.h source/Board.cpp source/Board.h source/Hash.cpp source/Hash.h)
 add_executable(shatar::exe ALIAS shatar_exe)
 
 set_property(TARGET shatar_exe PROPERTY OUTPUT_NAME shatar)

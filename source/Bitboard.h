@@ -29,10 +29,6 @@ public:
     //explicit Bitboard(std::bitset<64> &&other) { _b = other; }
     Bitboard() = default;
 
-    Bitboard(const Bitboard &) = default;
-
-    Bitboard(Bitboard &&) = default;
-
     bool test(size_t i, size_t j) const {
         return _b.test(i * 8 + j);
     }
