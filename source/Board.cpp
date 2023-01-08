@@ -88,3 +88,24 @@ Board::Board(std::string_view sv) {
     }
     update();
 }
+
+std::ostream &operator<<(std::ostream &os, const Board &b) {
+    for (size_t bit = 0; bit < 64; ++bit) {
+        if (b.look_pieces(Color::White, Piece::Pawn).test(bit)) os << 'P';
+        else if (b.look_pieces(Color::White, Piece::Rook).test(bit)) os << 'R';
+        else if (b.look_pieces(Color::White, Piece::Knight).test(bit)) os << 'N';
+        else if (b.look_pieces(Color::White, Piece::Bishop).test(bit)) os << 'B';
+        else if (b.look_pieces(Color::White, Piece::Queen).test(bit)) os << 'Q';
+        else if (b.look_pieces(Color::White, Piece::King).test(bit)) os << 'K';
+        else if (b.look_pieces(Color::Black, Piece::Pawn).test(bit)) os << 'p';
+        else if (b.look_pieces(Color::Black, Piece::Rook).test(bit)) os << 'r';
+        else if (b.look_pieces(Color::Black, Piece::Knight).test(bit)) os << 'n';
+        else if (b.look_pieces(Color::Black, Piece::Bishop).test(bit)) os << 'b';
+        else if (b.look_pieces(Color::Black, Piece::Queen).test(bit)) os << 'q';
+        else if (b.look_pieces(Color::Black, Piece::King).test(bit)) os << 'k';
+        else os << ' ';
+        if ((bit + 1) % 8 == 0)
+            os << std::endl;
+    }
+    return os;
+}

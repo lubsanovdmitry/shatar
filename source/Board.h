@@ -7,6 +7,7 @@
 
 #include <array>
 #include <string_view>
+#include <ostream>
 
 #include "Bitboard.h"
 
@@ -58,6 +59,8 @@ public:
     Bitboard &get_side(size_t color){
         return _colors[color];
     }
+
+    friend std::ostream& operator<< (std::ostream& os, const Board &b);
 };
 
 #endif //SHATAR_BOARD_H
