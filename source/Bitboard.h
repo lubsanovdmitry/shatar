@@ -10,6 +10,10 @@
 
 static constexpr size_t MAGIC = 0x03f79d71b4cb0a89;
 
+/**
+ * Implementation of the Bitboard
+ */
+
 class Bitboard {
     std::bitset<64> _b;
 
@@ -28,6 +32,13 @@ public:
 
     //explicit Bitboard(std::bitset<64> &&other) { _b = other; }
     Bitboard() = default;
+
+    /**
+     * Test a bit on the bitboard
+     * @param i file
+     * @param j rank
+     * @return true if bit is set
+     */
 
     bool test(size_t i, size_t j) const {
         return _b.test(i * 8 + j);

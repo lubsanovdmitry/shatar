@@ -4,10 +4,11 @@
 
 #include "Hash.h"
 
-size_t std::hash<Board>::operator()(const Board& b, bool color) const noexcept {
+Hash::Hash(const Board& b, bool color) noexcept {
     size_t _hash = 0;
+
     if (color) {
-        _hash = __zobrist::black;
+        _hash ^= __zobrist::black;
     }
 
     uint8_t side = 0;
@@ -22,10 +23,10 @@ size_t std::hash<Board>::operator()(const Board& b, bool color) const noexcept {
 
         for (size_t piece = 0; piece < 6; ++piece) {
             if (b.look_pieces(side, piece).test(bit)) {
-                _hash = put_piece(_hash, bit, color, piece);
+                _hash = put_piece(bit, side, piece);
                 break;
             }
         }
     }
-    return _hash;
+    value = _hash;
 }

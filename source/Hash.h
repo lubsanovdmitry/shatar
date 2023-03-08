@@ -6,8 +6,13 @@
 #define SHATAR_HASH_H
 
 #include <functional>
-
 #include "Board.h"
+
+/**
+ * namespace __zobrist
+ *
+ * Generates random numbers for hashing
+ */
 
 namespace __zobrist {
     static constexpr uint64_t __seed = 0x98f107;
@@ -18,7 +23,7 @@ namespace __zobrist {
         return __multiplier * hash + __summand;
     }
 
-    static consteval std::array<std::array<std::array<uint64_t ,6>, 2>, 64> precalc_hash() {
+    static consteval std::array<std::array<std::array<uint64_t, 6>, 2>, 64> precalc_hash() {
         std::array<std::array<std::array<uint64_t, 6>, 2>, 64> constants{};
         uint64_t prev = __seed;
         for (size_t bit = 0; bit < 64; ++bit) {
@@ -33,20 +38,49 @@ namespace __zobrist {
 
     static constexpr auto hashes = precalc_hash();
     static constexpr uint64_t black = next_hash(hashes[63][1][5]);
-}
+} // namespace __zobrist
 
+/**
+ * Hash structure
+ *
+ * Hashes the board
+ */
 
-template<>
-struct std::hash<Board> {
-    static constexpr size_t invert(size_t hash) {
-        return hash ^ __zobrist::black;
+class Hash {
+private:
+    size_t value;
+
+public:
+
+    Hash() = default;
+
+    Hash(const Board &, bool) noexcept;
+
+    constexpr size_t invert() {
+        return value ^= __zobrist::black;
     }
 
-    static constexpr size_t put_piece(size_t hash, size_t square, size_t side, size_t piece) {
-        return hash ^ (__zobrist::hashes[square][side][piece]);
+    /**
+     * Put a piece on the hash
+     *
+     * @param square the square on the field
+     * @param side current side
+     * @param piece which piece is put
+     * @return the hash
+     */
+
+    constexpr size_t put_piece(size_t square, size_t side, size_t piece) {
+        return value ^= (__zobrist::hashes[square][side][piece]);
     }
 
-    size_t operator()(const Board&, bool) const noexcept;
+    bool operator==(const Hash &rhs) const noexcept {
+        return value == rhs.value;
+    }
+
+    bool operator<(const Hash &rhs) const noexcept {
+        return value < rhs.value;
+    }
+
 };
 
 #endif //SHATAR_HASH_H
