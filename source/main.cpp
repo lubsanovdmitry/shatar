@@ -3,9 +3,11 @@
 
 #include "Board.h"
 #include "Hash.h"
-
+#include "Players.h"
 
 int main(int argc, char *argv[]) {
-    
+
+    Player p1, p2;
+    p1 = Human();
     return 0;
 }
