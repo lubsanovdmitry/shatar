@@ -48,13 +48,15 @@ namespace __zobrist {
 
 class Hash {
 private:
-    size_t value;
+
 
 public:
 
     Hash() = default;
 
     Hash(const Board &, bool) noexcept;
+
+    size_t value;
 
     constexpr size_t invert() {
         return value ^= __zobrist::black;

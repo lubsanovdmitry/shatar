@@ -37,7 +37,7 @@ public:
      * Test a bit on the bitboard
      * @param i file
      * @param j rank
-     * @return true if bit is set
+     * @return true if the bit is set
      */
 
     bool test(size_t i, size_t j) const {

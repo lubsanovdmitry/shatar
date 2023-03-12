@@ -10,7 +10,7 @@ project(
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(shatar_exe source/main.cpp source/Bitboard.cpp source/Bitboard.h source/Board.cpp source/Board.h source/Hash.cpp source/Hash.h source/Players.h)
+add_executable(shatar_exe source/main.cpp source/Bitboard.cpp source/Bitboard.h source/Board.cpp source/Board.h source/Hash.cpp source/Hash.h source/Players.h source/Move.h source/Move.cpp source/Position.cpp source/Position.h)
 add_executable(shatar::exe ALIAS shatar_exe)
 
 set_property(TARGET shatar_exe PROPERTY OUTPUT_NAME shatar)

@@ -6,25 +6,26 @@
 #define SHATAR_PLAYERS_H
 
 #include "Board.h"
+#include "Position.h"
 
 class Player {
 public: 
-    virtual int getMove(const Board&);
+    virtual Move getMove(const Position&);
     //virtual Board presentState();
     Player () = default;
 };
 
 class Human : public Player {
 public:
-    int getMove(const Board&);
-    void presentMove(const Board&);
+    Move getMove(const Position&) override;
+    void presentMove(const Position&);
 };
 
 class AI : public Player {
 private:
 
 public:
-    int getMove(const Board&);
+    Move getMove(const Position&) override;
 };
 
 #endif

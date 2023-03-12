@@ -11,19 +11,19 @@
 
 #include "Bitboard.h"
 
-namespace Piece {
+struct Piece {
     static constexpr size_t Pawn = 0;
     static constexpr size_t Knight = 1;
     static constexpr size_t Bishop = 2;
     static constexpr size_t Rook = 3;
     static constexpr size_t Queen = 4;
     static constexpr size_t King = 5;
-}
+};
 
-namespace Color {
+struct Color {
     static constexpr size_t White = 0;
     static constexpr size_t Black = 1;
-}
+};
 
 class Board {
     //pawn king queen knight rook bishop

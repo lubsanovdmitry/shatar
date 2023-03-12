@@ -7,7 +7,6 @@
 
 int main(int argc, char *argv[]) {
 
-    Player p1, p2;
-    p1 = Human();
+    Player p1{}, p2{};
     return 0;
 }
