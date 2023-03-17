@@ -2,6 +2,7 @@
 // Created by dmitry on 05.01.23.
 //
 
+#include <iostream>
 #include "Board.h"
 
 void Board::update() {
@@ -31,81 +32,88 @@ Board::Board(std::string_view sv) {
         switch (c) {
             case 'r':
                 _pieces[Color::Black][Piece::Rook].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'n':
                 _pieces[Color::Black][Piece::Knight].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'b':
                 _pieces[Color::Black][Piece::Bishop].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'q':
                 _pieces[Color::Black][Piece::Queen].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'k':
                 _pieces[Color::Black][Piece::King].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'p':
                 _pieces[Color::Black][Piece::Pawn].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'R':
                 _pieces[Color::White][Piece::Rook].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'N':
                 _pieces[Color::White][Piece::Knight].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'B':
                 _pieces[Color::White][Piece::Bishop].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'Q':
                 _pieces[Color::White][Piece::Queen].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'K':
                 _pieces[Color::White][Piece::King].set(bit);
-                ++col;
+                ++row;
                 break;
             case 'P':
                 _pieces[Color::White][Piece::Pawn].set(bit);
-                ++col;
-                break;
-            case '/':
-                col = 0;
                 ++row;
                 break;
+            case '/':
+                row = 0;
+                ++col;
+                break;
             default:
-                col += (c - '0');
+                row += (c - '0');
                 break;
         }
+        //std::cerr << *this << std::endl;
     }
     update();
 }
 
 std::ostream &operator<<(std::ostream &os, const Board &b) {
-    for (size_t bit = 0; bit < 64; ++bit) {
-        if (b.look_pieces(Color::White, Piece::Pawn).test(bit)) os << 'P';
-        else if (b.look_pieces(Color::White, Piece::Rook).test(bit)) os << 'R';
-        else if (b.look_pieces(Color::White, Piece::Knight).test(bit)) os << 'N';
-        else if (b.look_pieces(Color::White, Piece::Bishop).test(bit)) os << 'B';
-        else if (b.look_pieces(Color::White, Piece::Queen).test(bit)) os << 'Q';
-        else if (b.look_pieces(Color::White, Piece::King).test(bit)) os << 'K';
-        else if (b.look_pieces(Color::Black, Piece::Pawn).test(bit)) os << 'p';
-        else if (b.look_pieces(Color::Black, Piece::Rook).test(bit)) os << 'r';
-        else if (b.look_pieces(Color::Black, Piece::Knight).test(bit)) os << 'n';
-        else if (b.look_pieces(Color::Black, Piece::Bishop).test(bit)) os << 'b';
-        else if (b.look_pieces(Color::Black, Piece::Queen).test(bit)) os << 'q';
-        else if (b.look_pieces(Color::Black, Piece::King).test(bit)) os << 'k';
-        else os << ' ';
-        if ((bit + 1) % 8 == 0)
-            os << std::endl;
+    os << "  ABCDEFGH\n";
+    for (size_t x = 0; x < 8; ++x) {
+        os << (char)('1' + x) << ' ';
+        for (size_t y = 0; y < 8; ++y) {
+            size_t bit = y * 8 + x;
+            if (b.look_pieces(Color::White, Piece::Pawn).test(bit)) os << 'P';
+            else if (b.look_pieces(Color::White, Piece::Rook).test(bit)) os << 'R';
+            else if (b.look_pieces(Color::White, Piece::Knight).test(bit)) os << 'N';
+            else if (b.look_pieces(Color::White, Piece::Bishop).test(bit)) os << 'B';
+            else if (b.look_pieces(Color::White, Piece::Queen).test(bit)) os << 'Q';
+            else if (b.look_pieces(Color::White, Piece::King).test(bit)) os << 'K';
+            else if (b.look_pieces(Color::Black, Piece::Pawn).test(bit)) os << 'p';
+            else if (b.look_pieces(Color::Black, Piece::Rook).test(bit)) os << 'r';
+            else if (b.look_pieces(Color::Black, Piece::Knight).test(bit)) os << 'n';
+            else if (b.look_pieces(Color::Black, Piece::Bishop).test(bit)) os << 'b';
+            else if (b.look_pieces(Color::Black, Piece::Queen).test(bit)) os << 'q';
+            else if (b.look_pieces(Color::Black, Piece::King).test(bit)) os << 'k';
+            else os << ' ';
+            //if ((bit + 1) % 8 == 0)
+               // os << std::endl;
+        }
+        os << std::endl;
     }
     return os;
 }

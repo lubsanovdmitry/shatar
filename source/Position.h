@@ -12,14 +12,14 @@
 
 
 class Position {
-private:
+public:
     Board board;
 
     size_t move_ctr;
     Hash hash;
     size_t fifty_moves_ctr;
     RecentHistory recent_history;
-public:
+
     Position(std::string_view sv, int move_ctr);
 
     void add_piece(size_t pos, size_t type, size_t color);

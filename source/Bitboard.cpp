@@ -4,7 +4,7 @@
 
 #include "Bitboard.h"
 
-size_t Bitboard::find_last() {
+size_t Bitboard::find_first() {
     size_t b = _b.to_ullong();
     b |= b >> 1;
     b |= b >> 2;

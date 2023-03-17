@@ -10,7 +10,7 @@
 
 class Player {
 public: 
-    virtual Move getMove(const Position&);
+    virtual Move getMove(const Position&) { return {}; }
     //virtual Board presentState();
     Player () = default;
 };

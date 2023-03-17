@@ -41,7 +41,7 @@ void Position::update_fifty_moves_ctr(bool reset) {
 void Position::apply_move(const Move &m) {
     this->remove_piece(m.from, m.type, m.side);
     this->add_piece(m.to, m.type, m.side);
-    if (m.def_type != 0xFF)
+    if (m.def_type != Piece::None)
         this->remove_piece(m.to, m.def_type, m.def_side);
 
     switch (m.flag) {

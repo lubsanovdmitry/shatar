@@ -18,20 +18,26 @@ class Bitboard {
     std::bitset<64> _b;
 
     static constexpr std::array<size_t, 64> _BST = {
-            0, 47,  1, 56, 48, 27,  2, 60,
-            57, 49, 41, 37, 28, 16,  3, 61,
+            0, 47, 1, 56, 48, 27, 2, 60,
+            57, 49, 41, 37, 28, 16, 3, 61,
             54, 58, 35, 52, 50, 42, 21, 44,
-            38, 32, 29, 23, 17, 11,  4, 62,
+            38, 32, 29, 23, 17, 11, 4, 62,
             46, 55, 26, 59, 40, 36, 15, 53,
             34, 51, 20, 43, 31, 22, 10, 45,
-            25, 39, 14, 33, 19, 30,  9, 24,
-            13, 18,  8, 12,  7,  6,  5, 63
+            25, 39, 14, 33, 19, 30, 9, 24,
+            13, 18, 8, 12, 7, 6, 5, 63
     };
 
 public:
 
-    //explicit Bitboard(std::bitset<64> &&other) { _b = other; }
+
     Bitboard() = default;
+
+    explicit Bitboard(std::bitset<64> &&other) { _b = other; }
+
+    explicit Bitboard(const std::string &s) { _b = std::bitset<64>(s); }
+
+    explicit Bitboard(size_t val) { _b = std::bitset<64>(val); }
 
     /**
      * Test a bit on the bitboard
@@ -52,7 +58,7 @@ public:
         _b.reset(i * 8 + j);
     }
 
-    bool test(size_t i) const {
+    [[nodiscard]] bool test(size_t i) const {
         return _b.test(i);
     }
 
@@ -129,15 +135,42 @@ public:
         return *this;
     }
 
-    size_t count() const noexcept {
+    [[nodiscard]] size_t count() const noexcept {
         return _b.count();
     }
 
-    size_t find_first() {
-        return _BST[(_b.to_ullong() ^ (_b.to_ullong() - 1)) * MAGIC];
+    size_t find_last() {
+        return _BST[((_b.to_ullong() ^ (_b.to_ullong() - 1)) * MAGIC) >> 58];
     }
 
-    size_t find_last();
+    size_t find_first();
 };
+
+namespace BitboardColumns {
+    static std::array<Bitboard, 8> calc_columns() {
+        std::array<Bitboard, 8> columns{};
+
+        for (uint8_t x = 0; x < 8; x = x + 1) {
+            for (uint8_t y = 0; y < 8; y = y + 1) columns[x].set( y * 8 + x);
+        }
+
+        return columns;
+    }
+
+
+    static std::array<Bitboard, 8> Columns = calc_columns();
+
+
+    static std::array<Bitboard, 8> calc_inversion_columns() {
+        std::array<Bitboard, 8> inversion_columns{};
+
+        for (uint8_t i = 0; i < 8; i = i + 1) inversion_columns[i] = ~Columns[i];
+
+        return inversion_columns;
+    }
+
+
+    static std::array<Bitboard, 8> InversionColumns = BitboardColumns::calc_inversion_columns();
+}
 
 #endif //SHATAR_BITBOARD_H

@@ -18,6 +18,7 @@ struct Piece {
     static constexpr size_t Rook = 3;
     static constexpr size_t Queen = 4;
     static constexpr size_t King = 5;
+    static constexpr size_t None = 255;
 };
 
 struct Color {
@@ -26,13 +27,14 @@ struct Color {
 };
 
 class Board {
+public:
     //pawn king queen knight rook bishop
     std::array<std::array<Bitboard, 6>, 2> _pieces;
     std::array<Bitboard, 2> _colors;
-    std::array<Bitboard, 2> _inverted_colors;
+
     Bitboard _all_pieces, _empty_spaces;
 
-public:
+    std::array<Bitboard, 2> _inverted_colors;
 
     Board() = default;
 
