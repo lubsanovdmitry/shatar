@@ -7,6 +7,8 @@
 
 #include <bitset>
 #include <array>
+#include <rang.hpp>
+#include <iomanip>
 
 static constexpr size_t MAGIC = 0x03f79d71b4cb0a89;
 
@@ -59,14 +61,18 @@ public:
     }
 
     [[nodiscard]] bool test(size_t i) const {
+        if (i > 63)
+            return 0;
         return _b.test(i);
     }
 
     void set(size_t i) {
+        if (i < 64)
         _b.set(i);
     }
 
     void reset(size_t i) {
+        if (i < 64)
         _b.reset(i);
     }
 
@@ -144,6 +150,8 @@ public:
     }
 
     size_t find_first();
+
+    friend std::ostream& operator<<(std::ostream&os, Bitboard b);
 };
 
 namespace BitboardColumns {

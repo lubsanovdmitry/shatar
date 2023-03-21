@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
         if (p.move_ctr % 2 == 0) {
             m = h.getMove(p, p.move_ctr % 2, 0, 0);
         } else {
-            m = ai.getMove(p, p.move_ctr % 2, 250, 6 * 1e+2);
+            m = ai.getMove(p, p.move_ctr % 2, 250, 5 * 1e+2);
         }
         if (m.type == Piece::None) {
             std::cout << "Invalid move\n";

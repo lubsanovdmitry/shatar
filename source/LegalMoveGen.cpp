@@ -59,12 +59,14 @@ MoveList LegalMoveGen::generate(Position position, size_t side, bool only_captur
         attacker_p = all_bishops.find_last();
         all_bishops.reset(attacker_p);
         mask = PseudoLegalMoveMaskGen::generate_bishop_mask(position.board, attacker_p, side, only_captures);
+        //std::cout << mask;
         LegalMoveGen::_piece_mask_to_moves(position.board, mask, attacker_p, Piece::Bishop, side, moves);
     }
     while (all_rooks != Bitboard(0)) {
         attacker_p = all_rooks.find_last();
         all_rooks.reset(attacker_p);
         mask = PseudoLegalMoveMaskGen::generate_rook_mask(position.board, attacker_p, side, only_captures);
+        //std::cout << mask;
         LegalMoveGen::_piece_mask_to_moves(position.board, mask, attacker_p, Piece::Rook, side, moves);
     }
     while (all_queens != Bitboard(0)) {

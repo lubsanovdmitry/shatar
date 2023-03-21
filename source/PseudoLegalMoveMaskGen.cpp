@@ -49,28 +49,349 @@ PseudoLegalMoveMaskGen::calc_ray(Board b, size_t p, size_t side, bool only_captu
 }
 
 Bitboard PseudoLegalMoveMaskGen::generate_bishop_mask(Board b, size_t p, size_t side, bool only_captures) {
-    Bitboard nw = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::NorthWest, false);
-    Bitboard ne = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::NorthEast, false);
-    Bitboard sw = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::SouthWest, true);
-    Bitboard se = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::SouthEast, true);
+    Bitboard mv(0);
+    //while (b._pieces[side][Piece::Bishop] != Bitboard(0)) {
+    //size_t p = b._pieces[side][Piece::Bishop].find_last();
+    size_t x = p % 8;
+    size_t y = p / 8;
+    if (!only_captures) {
+        for (int s = 0; s < 8; ++s) {
+            int i = x - 1 - s;
+            int j = y - 1 - s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (!b._all_pieces.test(j * 8 + i)) {
+                mv.set(j * 8 + i);
+            } else {
+                if (b._colors[!side].test(j * 8 + i))
+                    mv.set(j * 8 + i);
+                break;
+            }
 
-    return nw | ne | sw | se;
+        }
+        for (int s = 0; s < 8; ++s) {
+            int i = x - 1 - s;
+            int j = y + 1 + s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (!b._all_pieces.test(j * 8 + i)) {
+                mv.set(j * 8 + i);
+            } else {
+                if (b._colors[!side].test(j * 8 + i))
+                    mv.set(j * 8 + i);
+                break;
+            }
+        }
+
+
+        for (int s = 0; s < 8; ++s) {
+            int i = x + 1 + s;
+            int j = y - 1 - s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (!b._all_pieces.test(j * 8 + i)) {
+                mv.set(j * 8 + i);
+            } else {
+                if (b._colors[!side].test(j * 8 + i))
+                    mv.set(j * 8 + i);
+                break;
+            }
+        }
+
+        for (int s = 0; s < 8; ++s) {
+            int i = x - 1 - s;
+            int j = y - 1 - s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (!b._all_pieces.test(j * 8 + i)) {
+                mv.set(j * 8 + i);
+            } else {
+                if (b._colors[!side].test(j * 8 + i))
+                    mv.set(j * 8 + i);
+                break;
+            }
+        }
+    } else {
+        for (int s = 0; s < 8; ++s) {
+            int i = x - 1 - s;
+            int j = y - 1 - s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (b._all_pieces.
+                    test(j
+                         * 8 + i)) {
+                if (b._colors[!side].
+                        test(j
+                             * 8 + i))
+                    mv.
+                            set(j
+                                * 8 + i);
+                break;
+            }
+        }
+
+        for (int s = 0; s < 8; ++s) {
+            int i = x - 1 - s;
+            int j = y - 1 - s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (b._all_pieces.
+                    test(j
+                         * 8 + i)) {
+                if (b._colors[!side].
+                        test(j
+                             * 8 + i))
+                    mv.
+                            set(j
+                                * 8 + i);
+                break;
+            }
+        }
+
+        for (int s = 0; s < 8; ++s) {
+            int i = x - 1 - s;
+            int j = y - 1 - s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (b._all_pieces.
+                    test(j
+                         * 8 + i)) {
+                if (b._colors[!side].
+                        test(j
+                             * 8 + i))
+                    mv.
+                            set(j
+                                * 8 + i);
+                break;
+            }
+        }
+
+        for (int s = 0; s < 8; ++s) {
+            int i = x - 1 - s;
+            int j = y - 1 - s;
+            if (i < 0 || j < 0 || j > 7 || i > 7)
+                break;
+            if (b._all_pieces.
+                    test(j
+                         * 8 + i)) {
+                if (b._colors[!side].
+                        test(j
+                             * 8 + i))
+                    mv.set(j * 8 + i);
+                break;
+            }
+        }
+    }
+
+    return mv;
 }
 
 Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, size_t p, size_t side, bool only_captures) {
-    Bitboard n = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::North, false);
-    Bitboard s = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::South, true);
-    Bitboard w = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::West, true);
-    Bitboard e = calc_ray(b, p, side, only_captures, SlidersMasks::Direction::East, false);
+    Bitboard mv(0);
 
-    return n | s | w | e;
+    //size_t p = b._pieces[side][Piece::Rook].find_last();
+    size_t x = p % 8;
+    size_t y = p / 8;
+
+    if (!only_captures) {
+        for (int i = x - 1; i >= 0; --i) {
+            if (!b._all_pieces.test(y * 8 + i)) {
+                mv.set(y * 8 + i);
+            } else {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            }
+        }
+        for (int i = x + 1; i < 8; ++i) {
+            if (!b._all_pieces.test(y * 8 + x)) {
+                mv.set(y * 8 + i);
+            } else {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            }
+        }
+
+        for (int j = y - 1; j >= 0; --j) {
+            if (!b._all_pieces.test(j * 8 + x)) {
+                mv.set(j * 8 + x);
+            } else {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            }
+        }
+        for (int j = y + 1; j < 8; ++j) {
+            if (!b._all_pieces.test(j * 8 + x)) {
+                mv.set(j * 8 + x);
+            } else {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            }
+        }
+    } else {
+        for (int i = x - 1; i >= 0; --i) {
+            if (b._all_pieces.test(y * 8 + i)) {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            } else {
+
+            }
+        }
+        for (int i = x + 1; i < 8; ++i) {
+            if (b._all_pieces.test(y * 8 + x)) {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            } else {
+
+            }
+        }
+
+        for (int j = y - 1; j >= 0; --j) {
+            if (b._all_pieces.test(j * 8 + x)) {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            } else {
+
+            }
+        }
+        for (int j = y + 1; j < 8; ++j) {
+            if (b._all_pieces.test(j * 8 + x)) {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            } else {
+
+            }
+        }
+    }
+
+    return mv;
 }
 
 Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, size_t p, size_t side, bool only_captures) {
-    Bitboard bishop_mask = generate_bishop_mask(b, p, side, only_captures);
-    Bitboard rook_mask = generate_rook_mask(b, p, side, only_captures);
+    Bitboard mv(0);
 
-    return bishop_mask | rook_mask;
+    //size_t p = b._pieces[side][Piece::Rook].find_last();
+    size_t x = p % 8;
+    size_t y = p / 8;
+
+    if (!only_captures) {
+        for (int i = x - 1; i >= 0; --i) {
+            if (!b._all_pieces.test(y * 8 + i)) {
+                mv.set(y * 8 + i);
+            } else {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            }
+        }
+        for (int i = x + 1; i < 8; ++i) {
+            if (!b._all_pieces.test(y * 8 + x)) {
+                mv.set(y * 8 + i);
+            } else {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            }
+        }
+
+        for (int j = y - 1; j >= 0; --j) {
+            if (!b._all_pieces.test(j * 8 + x)) {
+                mv.set(j * 8 + x);
+            } else {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            }
+        }
+        for (int j = y + 1; j < 8; ++j) {
+            if (!b._all_pieces.test(j * 8 + x)) {
+                mv.set(j * 8 + x);
+            } else {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            }
+        }
+        if (x > 0 && y > 0) {
+            if (!b._colors[side].test((y - 1) * 8 + (x - 1))) {
+                mv.set((y - 1) * 8 + (x - 1));
+            }
+        }
+        if (x > 0 && y < 7) {
+            if (!b._colors[side].test((y + 1) * 8 + (x - 1))) {
+                mv.set((y + 1) * 8 + (x - 1));
+            }
+        }
+        if (x < 7 && y > 0) {
+            if (!b._colors[side].test((y - 1) * 8 + (x + 1))) {
+                mv.set((y - 1) * 8 + (x + 1));
+            }
+        }
+        if (x < 7 && y < 7) {
+            if (!b._colors[side].test((y + 1) * 8 + (x + 1))) {
+                mv.set((y + 1) * 8 + (x + 1));
+            }
+        }
+    } else {
+        for (int i = x - 1; i >= 0; --i) {
+            if (b._all_pieces.test(y * 8 + i)) {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            }
+        }
+        for (int i = x + 1; i < 8; ++i) {
+            if (b._all_pieces.test(y * 8 + x)) {
+                if (b._colors[!side].test(y * 8 + i))
+                    mv.set(y * 8 + i);
+                break;
+            }
+        }
+
+        for (int j = y - 1; j >= 0; --j) {
+            if (b._all_pieces.test(j * 8 + x)) {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            }
+        }
+        for (int j = y + 1; j < 8; ++j) {
+            if (b._all_pieces.test(j * 8 + x)) {
+                if (b._colors[!side].test(j * 8 + x))
+                    mv.set(j * 8 + x);
+                break;
+            }
+        }
+        if (x > 0 && y > 0) {
+            if (b._colors[!side].test((y - 1) * 8 + (x - 1))) {
+                mv.set((y - 1) * 8 + (x - 1));
+            }
+        }
+        if (x > 0 && y < 7) {
+            if (b._colors[!side].test((y + 1) * 8 + (x - 1))) {
+                mv.set((y + 1) * 8 + (x - 1));
+            }
+        }
+        if (x < 7 && y > 0) {
+            if (b._colors[!side].test((y - 1) * 8 + (x + 1))) {
+                mv.set((y - 1) * 8 + (x + 1));
+            }
+        }
+        if (x < 7 && y < 7) {
+            if (b._colors[!side].test((y + 1) * 8 + (x + 1))) {
+                mv.set((y + 1) * 8 + (x + 1));
+            }
+        }
+    }
+
+    return mv;
 }
 
 Bitboard PseudoLegalMoveMaskGen::generate_pawn_mask(Board b, size_t side) {

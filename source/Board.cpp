@@ -97,6 +97,8 @@ std::ostream &operator<<(std::ostream &os, const Board &b) {
         os << (char)('8' - x) << ' ';
         for (size_t y = 0; y < 8; ++y) {
             size_t bit = y * 8 + x;
+            if (x % 2 == y % 2)
+                os << rang::style::reversed;
             if (b.look_pieces(Color::White, Piece::Pawn).test(bit)) os << 'P';
             else if (b.look_pieces(Color::White, Piece::Rook).test(bit)) os << 'R';
             else if (b.look_pieces(Color::White, Piece::Knight).test(bit)) os << 'N';
@@ -112,6 +114,7 @@ std::ostream &operator<<(std::ostream &os, const Board &b) {
             else os << ' ';
             //if ((bit + 1) % 8 == 0)
                // os << std::endl;
+               os << rang::style::reset;
         }
         os << std::endl;
     }

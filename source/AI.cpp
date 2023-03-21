@@ -167,7 +167,7 @@ int AI::alpha_beta_min_only_captures(const Position &position, int alpha, int be
         beta = evaluation;
 
     MoveList moves = LegalMoveGen::generate(position, Color::Black, true);
-    moves = MoveSort::sort(position.board, moves);
+    //moves = MoveSort::sort(position.board, moves);
 
     Move move;
 
@@ -204,13 +204,14 @@ int AI::alpha_beta_max_only_captures(const Position &position, int alpha, int be
         alpha = evaluation;
 
     MoveList moves = LegalMoveGen::generate(position, Color::White, true);
-    moves = MoveSort::sort(position.board, moves);
+    //moves = MoveSort::sort(position.board, moves);
     Move move;
 
     Position copy;
 
     for (uint8_t i = 0; i < moves.size(); i = i + 1) {
         move = moves[i];
+
 
         copy = position;
         copy.apply_move(move);
