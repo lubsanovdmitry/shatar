@@ -5,10 +5,71 @@
 #include "PseudoLegalMoveMaskGen.h"
 
 Bitboard PseudoLegalMoveMaskGen::generate_knight_mask(Board b, size_t p, size_t side, bool only_captures) {
+    Bitboard mv(0);
+    /*std::cout << KnightMasks::Masks[p-24];
     if (only_captures) {
         return KnightMasks::Masks[p] & b.look_side(!side);
     }
-    return KnightMasks::Masks[p] & (b._inverted_colors[side]);
+    return KnightMasks::Masks[p] & (b._inverted_colors[side]);*/
+
+    // -17 -10 +6 +15
+    // -15 -6 +10 +17
+
+    size_t p1 = p - 17, p2 = p - 10, p3 = p + 6, p4 = p + 15,
+            p5 = p - 15, p6 = p - 6, p7 = p + 10, p8 = p + 17;
+    if (p % 8 < 2)
+        p2 = -1000, p3 = -1000;
+    if (p % 8 > 5)
+        p6 = -1000, p7 = -1000;
+    if (p % 8 < 1)
+        p1 = -1000, p4 = -1000;
+    if (p % 8 > 6)
+        p5 = -1000, p8 = -1000;
+    if (p / 8 < 2)
+        p1 = -1000, p5 = -1000;
+    if (p / 8 < 1)
+        p2 = -1000, p6 = -1000;
+    if (p / 8 > 5)
+        p4 = -1000, p8 = -1000;
+    if (p / 8 > 6)
+        p3 = -1000, p7 = -1000;
+    if (!only_captures) {
+        if (!b._colors[side].test(p1))
+            mv.set(p1);
+        if (!b._colors[side].test(p2))
+            mv.set(p2);
+        if (!b._colors[side].test(p3))
+            mv.set(p3);
+        if (!b._colors[side].test(p4))
+            mv.set(p4);
+        if (!b._colors[side].test(p5))
+            mv.set(p5);
+        if (!b._colors[side].test(p6))
+            mv.set(p6);
+        if (!b._colors[side].test(p7))
+            mv.set(p7);
+        if (!b._colors[side].test(p8))
+            mv.set(p8);
+
+    } else {
+        if (b._colors[!side].test(p1))
+            mv.set(p1);
+        if (b._colors[!side].test(p2))
+            mv.set(p2);
+        if (b._colors[!side].test(p3))
+            mv.set(p3);
+        if (b._colors[!side].test(p4))
+            mv.set(p4);
+        if (b._colors[!side].test(p5))
+            mv.set(p5);
+        if (b._colors[!side].test(p6))
+            mv.set(p6);
+        if (b._colors[!side].test(p7))
+            mv.set(p7);
+        if (b._colors[!side].test(p8))
+            mv.set(p8);
+    }
+    return mv;
 }
 
 Bitboard PseudoLegalMoveMaskGen::generate_king_mask(Board b, size_t p, size_t side, bool only_captures) {
