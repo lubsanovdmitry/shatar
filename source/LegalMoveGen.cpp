@@ -137,7 +137,7 @@ void LegalMoveGen::_pawn_mask_to_moves(Board b, Bitboard mask, size_t attacker_s
         move = {(uint8_t)(defender_p + attacker_index), (uint8_t )defender_p, Piece::Pawn, attacker_side, defender_type, !attacker_side, flag};
 
         if (LegalMoveGen::_is_legal(b, move)) {
-            if (defender_p < 1 || defender_p > 62) {
+            if (defender_p % 8 == 0 || defender_p % 8 == 7) {
                 moves.push_back({(uint8_t)(defender_p + attacker_index), (uint8_t)defender_p, 0, attacker_side, defender_type, !attacker_side, Move::Flags::PromotedKnight});
                 moves.push_back({(uint8_t)(defender_p + attacker_index), (uint8_t)defender_p, 0, attacker_side, defender_type, !attacker_side, Move::Flags::PromotedBishop});
                 moves.push_back({(uint8_t)(defender_p + attacker_index), (uint8_t)defender_p, 0, attacker_side, defender_type, !attacker_side, Move::Flags::PromotedRook});

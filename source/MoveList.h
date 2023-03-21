@@ -10,6 +10,8 @@
 #include "Move.h"
 #include "Board.h"
 
+
+
 class MoveList {
 public:
     MoveList();
@@ -19,8 +21,8 @@ public:
 
     void push_back(Move move);
     [[nodiscard]] uint8_t size() const;
-private:
-    std::array<Move, 218> _moves{};
+
+    std::array<Move, 218> _moves{Move()};
     uint8_t _size;
 };
 

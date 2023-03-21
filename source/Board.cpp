@@ -94,7 +94,7 @@ Board::Board(std::string_view sv) {
 std::ostream &operator<<(std::ostream &os, const Board &b) {
     os << "  ABCDEFGH\n";
     for (size_t x = 0; x < 8; ++x) {
-        os << (char)('1' + x) << ' ';
+        os << (char)('8' - x) << ' ';
         for (size_t y = 0; y < 8; ++y) {
             size_t bit = y * 8 + x;
             if (b.look_pieces(Color::White, Piece::Pawn).test(bit)) os << 'P';

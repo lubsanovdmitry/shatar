@@ -83,13 +83,13 @@ Bitboard PseudoLegalMoveMaskGen::generate_pawn_mask(Board b, size_t side) {
 
 Bitboard PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(Board b, size_t side, bool all) {
     if (side == Color::White) {
-        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] << 7) & BitboardColumns::InversionColumns[7];
+        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] >> 7) & BitboardColumns::InversionColumns[0]; //+7
         if (!all)
             mask = mask & b._colors[Color::Black];
         return mask;
     }
 
-    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] >> 9) & BitboardColumns::InversionColumns[7];
+    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] >> 9) & BitboardColumns::InversionColumns[7]; //+9
     if (!all)
         mask = mask & b._colors[Color::White];
     return mask;
@@ -97,13 +97,13 @@ Bitboard PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(Board b, size_
 
 Bitboard PseudoLegalMoveMaskGen::generate_pawn_right_captures_mask(Board b, size_t side, bool all) {
     if (side == Color::White) {
-        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] << 9) & BitboardColumns::InversionColumns[0];
+        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] << 9) & BitboardColumns::InversionColumns[0]; //-9
         if (!all)
             mask = mask & b._colors[Color::Black];
         return mask;
     }
 
-    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] >> 7) & BitboardColumns::InversionColumns[0];
+    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] << 7) & BitboardColumns::InversionColumns[7]; //-7
     if (!all)
         mask = mask & b._colors[Color::White];
     return mask;

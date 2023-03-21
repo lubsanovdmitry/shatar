@@ -34,7 +34,7 @@ add_executable(shatar_exe
         source/Move.h source/Move.cpp
         source/Position.cpp source/Position.h
         source/MoveMasks.h
-        source/PseudoLegalMoveMaskGen.cpp source/PseudoLegalMoveMaskGen.h source/MoveList.cpp source/MoveList.h source/LegalMoveGen.cpp source/LegalMoveGen.h)
+        source/PseudoLegalMoveMaskGen.cpp source/PseudoLegalMoveMaskGen.h source/MoveList.cpp source/MoveList.h source/LegalMoveGen.cpp source/LegalMoveGen.h source/Static.cpp source/Static.h source/MoveSort.cpp source/MoveSort.h source/HashTable.cpp source/HashTable.h source/AI.cpp source/Human.cpp)
 
 add_executable(shatar::exe ALIAS shatar_exe)
 

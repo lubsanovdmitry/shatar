@@ -13,6 +13,9 @@
 
 class Position {
 public:
+
+    Position() = default;
+
     Board board;
 
     size_t move_ctr;
