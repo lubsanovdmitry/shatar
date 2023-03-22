@@ -7,8 +7,10 @@
 MoveList LegalMoveGen::generate(Position position, bool side, bool only_captures) {
     MoveList moves;
 
-    Bitboard pawn_left_captures_mask = PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(position.board, side, false);
-    Bitboard pawn_right_captures_mask = PseudoLegalMoveMaskGen::generate_pawn_right_captures_mask(position.board, side, false);
+    Bitboard pawn_left_captures_mask = PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(position.board, side,
+                                                                                                false);
+    Bitboard pawn_right_captures_mask = PseudoLegalMoveMaskGen::generate_pawn_right_captures_mask(position.board, side,
+                                                                                                  false);
 
     int8_t pawn_left_capture;
     int8_t pawn_right_capture;
@@ -16,14 +18,15 @@ MoveList LegalMoveGen::generate(Position position, bool side, bool only_captures
     if (side == Color::White) {
         pawn_left_capture = -7;
         pawn_right_capture = +9;
-    }
-    else {
+    } else {
         pawn_left_capture = -9;
         pawn_right_capture = +7;
     }
 
-    LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_left_captures_mask, side, pawn_left_capture, true,Move::Flags::None, moves);
-    LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_right_captures_mask, side, pawn_right_capture, true,Move::Flags::None, moves);
+    LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_left_captures_mask, side, pawn_left_capture, true,
+                                      Move::Flags::None, moves);
+    LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_right_captures_mask, side, pawn_right_capture, true,
+                                      Move::Flags::None, moves);
 
     if (!only_captures) {
         Bitboard pawn_default_mask = PseudoLegalMoveMaskGen::generate_pawn_mask(position.board, side);
@@ -32,12 +35,12 @@ MoveList LegalMoveGen::generate(Position position, bool side, bool only_captures
 
         if (side == Color::White) {
             pawn_default_move = +1;
-        }
-        else {
+        } else {
             pawn_default_move = -1;
         }
 
-        LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_default_mask, side, pawn_default_move, false,Move::Flags::None, moves);
+        LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_default_mask, side, pawn_default_move, false,
+                                          Move::Flags::None, moves);
         //LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_long_mask, side, pawn_long_move, false,Move::Flag::PawnLongMove, moves);
     }
 
@@ -77,14 +80,14 @@ MoveList LegalMoveGen::generate(Position position, bool side, bool only_captures
     }
 
     /**/
-    if (true) {
-        while (all_kings != Bitboard(0)) {
-            attacker_p = all_kings.find_last();
-            all_kings.reset(attacker_p);
-            mask = PseudoLegalMoveMaskGen::generate_king_mask(position.board, attacker_p, side, only_captures);
-            LegalMoveGen::_piece_mask_to_moves(position.board, mask, attacker_p, Piece::King, side, moves);
-        }
+
+    while (all_kings != Bitboard(0)) {
+        attacker_p = all_kings.find_last();
+        all_kings.reset(attacker_p);
+        mask = PseudoLegalMoveMaskGen::generate_king_mask(position.board, attacker_p, side, only_captures);
+        LegalMoveGen::_piece_mask_to_moves(position.board, mask, attacker_p, Piece::King, side, moves);
     }
+
 
     return moves;
 }
@@ -136,16 +139,24 @@ void LegalMoveGen::_pawn_mask_to_moves(Board b, Bitboard mask, bool attacker_sid
             }
         }
 
-        move = {(uint8_t)(defender_p + attacker_index), (uint8_t )defender_p, Piece::Pawn, attacker_side, defender_type, !attacker_side, flag};
+        move = {(uint8_t) (defender_p + attacker_index), (uint8_t) defender_p, Piece::Pawn, attacker_side,
+                defender_type, !attacker_side, flag};
 
         if (LegalMoveGen::_is_legal(b, move)) {
             if (defender_p % 8 == 0 || defender_p % 8 == 7) {
-                moves.push_back({(uint8_t)(defender_p + attacker_index), (uint8_t)defender_p, 0, attacker_side, defender_type, !attacker_side, Move::Flags::PromotedKnight});
-                moves.push_back({(uint8_t)(defender_p + attacker_index), (uint8_t)defender_p, 0, attacker_side, defender_type, !attacker_side, Move::Flags::PromotedBishop});
-                moves.push_back({(uint8_t)(defender_p + attacker_index), (uint8_t)defender_p, 0, attacker_side, defender_type, !attacker_side, Move::Flags::PromotedRook});
-                moves.push_back({(uint8_t)(defender_p + attacker_index), (uint8_t)defender_p, 0, attacker_side, defender_type, !attacker_side, Move::Flags::PromotedQueen});
-            }
-            else
+                moves.push_back(
+                        {(uint8_t) (defender_p + attacker_index), (uint8_t) defender_p, 0, attacker_side, defender_type,
+                         !attacker_side, Move::Flags::PromotedKnight});
+                moves.push_back(
+                        {(uint8_t) (defender_p + attacker_index), (uint8_t) defender_p, 0, attacker_side, defender_type,
+                         !attacker_side, Move::Flags::PromotedBishop});
+                moves.push_back(
+                        {(uint8_t) (defender_p + attacker_index), (uint8_t) defender_p, 0, attacker_side, defender_type,
+                         !attacker_side, Move::Flags::PromotedRook});
+                moves.push_back(
+                        {(uint8_t) (defender_p + attacker_index), (uint8_t) defender_p, 0, attacker_side, defender_type,
+                         !attacker_side, Move::Flags::PromotedQueen});
+            } else
                 moves.push_back(move);
         }
     }
@@ -158,11 +169,6 @@ bool LegalMoveGen::_is_legal(Board b, Move move) {
     b._pieces[move.side][move.type].set(move.to);
     if (move.def_type != 255)
         b._pieces[move.def_side][move.def_type].reset(move.to);
-    /*if (en_passant_capture) {
-        if (move.side == Color::White)
-            b._pieces[Color::Black][Piece::Pawn].reset(move.to - 8);
-        b._pieces[Color::White][Piece::Pawn].reset(move.to + 8);
-    }*/
 
     b.update();
 

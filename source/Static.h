@@ -5,6 +5,7 @@
 #ifndef SHATAR_STATIC_H
 #define SHATAR_STATIC_H
 
+#include <ctime>
 
 #include "Position.h"
 #include "Board.h"

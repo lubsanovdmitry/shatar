@@ -16,7 +16,7 @@ int Static::material(Board b) {
            (int) (b._pieces[Color::White][Piece::Bishop].count() - b._pieces[Color::Black][Piece::Bishop].count());
     res += Constant::Queen *
            (int) (b._pieces[Color::White][Piece::Queen].count() - b._pieces[Color::Black][Piece::Queen].count());
-
+    res += 25 - (rand() % 50);
     return res;
 }
 

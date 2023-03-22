@@ -96,7 +96,7 @@ AI::alpha_beta_max(Position position, int alpha, int beta, int depth_left, int d
     if (depth_left == 0)
         return std::make_tuple(AI::alpha_beta_max_only_captures(position, alpha, beta, depth_current), Move());
 
-    if (position.fifty_moves_ctr >= 50 || position.recent_history.getRepetitionsCount(position.hash) >= 3)
+    if (position.fifty_moves_ctr >= 50 || position.recent_history.getRepetitionsCount(position.hash) >= 10)
         return std::make_tuple(0, Move());
 
     MoveList moves = LegalMoveGen::generate(position, Color::White);
@@ -255,7 +255,7 @@ Move AI::getMove(const Position &p, bool side, int min_time, int max_time) {
 
     bool update_best_move;
 
-    for (int32_t i = 1; i < 1e+3; i = i + 1) {
+    for (int32_t i = 1; i < 1000; ++i) {
         evaluated = 0;
         maximal_depth = 0;
         ht_cutoffs = 0;

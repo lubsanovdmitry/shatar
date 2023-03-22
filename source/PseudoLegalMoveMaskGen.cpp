@@ -255,7 +255,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
     size_t y = p / 8;
 
     if (!only_captures) {
-        for (int i = x - 1; i >= 0; --i) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x - s - 1;
+            if (i < 0)
+                break;
             if (!b._all_pieces.test(y * 8 + i)) {
                 mv.set(y * 8 + i);
             } else {
@@ -264,8 +267,11 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
                 break;
             }
         }
-        for (int i = x + 1; i < 8; ++i) {
-            if (!b._all_pieces.test(y * 8 + x)) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x + s + 1;
+            if (i > 7)
+                break;
+            if (!b._all_pieces.test(y * 8 + i)) {
                 mv.set(y * 8 + i);
             } else {
                 if (b._colors[!side].test(y * 8 + i))
@@ -274,7 +280,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
             }
         }
 
-        for (int j = y - 1; j >= 0; --j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y - 1 - s;
+            if (j < 0)
+                break;
             if (!b._all_pieces.test(j * 8 + x)) {
                 mv.set(j * 8 + x);
             } else {
@@ -283,7 +292,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
                 break;
             }
         }
-        for (int j = y + 1; j < 8; ++j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y + 1 + s;
+            if (j > 7)
+                break;
             if (!b._all_pieces.test(j * 8 + x)) {
                 mv.set(j * 8 + x);
             } else {
@@ -293,7 +305,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
             }
         }
     } else {
-        for (int i = x - 1; i >= 0; --i) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x - s - 1;
+            if (i < 0)
+                break;
             if (b._all_pieces.test(y * 8 + i)) {
                 if (b._colors[!side].test(y * 8 + i))
                     mv.set(y * 8 + i);
@@ -302,8 +317,11 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
 
             }
         }
-        for (int i = x + 1; i < 8; ++i) {
-            if (b._all_pieces.test(y * 8 + x)) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x + s + 1;
+            if (i > 7)
+                break;
+            if (b._all_pieces.test(y * 8 + i)) {
                 if (b._colors[!side].test(y * 8 + i))
                     mv.set(y * 8 + i);
                 break;
@@ -312,7 +330,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
             }
         }
 
-        for (int j = y - 1; j >= 0; --j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y - 1 - s;
+            if (j < 0)
+                break;
             if (b._all_pieces.test(j * 8 + x)) {
                 if (b._colors[!side].test(j * 8 + x))
                     mv.set(j * 8 + x);
@@ -321,7 +342,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool sid
 
             }
         }
-        for (int j = y + 1; j < 8; ++j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y + 1 + s;
+            if (j > 7)
+                break;
             if (b._all_pieces.test(j * 8 + x)) {
                 if (b._colors[!side].test(j * 8 + x))
                     mv.set(j * 8 + x);
@@ -343,7 +367,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, uint8_t p, bool si
     size_t y = p / 8;
 
     if (!only_captures) {
-        for (int i = x - 1; i >= 0; --i) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x - s - 1;
+            if (i < 0)
+                break;
             if (!b._all_pieces.test(y * 8 + i)) {
                 mv.set(y * 8 + i);
             } else {
@@ -352,8 +379,11 @@ Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, uint8_t p, bool si
                 break;
             }
         }
-        for (int i = x + 1; i < 8; ++i) {
-            if (!b._all_pieces.test(y * 8 + x)) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x + s + 1;
+            if (i > 7)
+                break;
+            if (!b._all_pieces.test(y * 8 + i)) {
                 mv.set(y * 8 + i);
             } else {
                 if (b._colors[!side].test(y * 8 + i))
@@ -362,7 +392,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, uint8_t p, bool si
             }
         }
 
-        for (int j = y - 1; j >= 0; --j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y - 1 - s;
+            if (j < 0)
+                break;
             if (!b._all_pieces.test(j * 8 + x)) {
                 mv.set(j * 8 + x);
             } else {
@@ -371,7 +404,10 @@ Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, uint8_t p, bool si
                 break;
             }
         }
-        for (int j = y + 1; j < 8; ++j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y + 1 + s;
+            if (j > 7)
+                break;
             if (!b._all_pieces.test(j * 8 + x)) {
                 mv.set(j * 8 + x);
             } else {
@@ -401,33 +437,53 @@ Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, uint8_t p, bool si
             }
         }
     } else {
-        for (int i = x - 1; i >= 0; --i) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x - s - 1;
+            if (i < 0)
+                break;
             if (b._all_pieces.test(y * 8 + i)) {
                 if (b._colors[!side].test(y * 8 + i))
                     mv.set(y * 8 + i);
                 break;
+            } else {
+
             }
         }
-        for (int i = x + 1; i < 8; ++i) {
-            if (b._all_pieces.test(y * 8 + x)) {
+        for (int s = 0; s < 7; ++s) {
+            int i = x + s + 1;
+            if (i > 7)
+                break;
+            if (b._all_pieces.test(y * 8 + i)) {
                 if (b._colors[!side].test(y * 8 + i))
                     mv.set(y * 8 + i);
                 break;
+            } else {
+
             }
         }
 
-        for (int j = y - 1; j >= 0; --j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y - 1 - s;
+            if (j < 0)
+                break;
             if (b._all_pieces.test(j * 8 + x)) {
                 if (b._colors[!side].test(j * 8 + x))
                     mv.set(j * 8 + x);
                 break;
+            } else {
+
             }
         }
-        for (int j = y + 1; j < 8; ++j) {
+        for (int s = 0; s < 7; ++s) {
+            int j = y + 1 + s;
+            if (j > 7)
+                break;
             if (b._all_pieces.test(j * 8 + x)) {
                 if (b._colors[!side].test(j * 8 + x))
                     mv.set(j * 8 + x);
                 break;
+            } else {
+
             }
         }
         if (x > 0 && y > 0) {
@@ -503,6 +559,8 @@ bool PseudoLegalMoveMaskGen::in_danger(Board b, uint8_t p, bool side) {
     if ((generate_knight_mask(b, p, side, true) & b._pieces[!side][Piece::Knight]).count())
         return true;
     if ((generate_bishop_mask(b, p, side, true) & b._pieces[!side][Piece::Bishop]).count())
+        return true;
+    if ((generate_rook_mask(b, p, side, true) & b._pieces[!side][Piece::Rook]).count())
         return true;
     if ((generate_queen_mask(b, p, side, true) & b._pieces[!side][Piece::Queen]).count())
         return true;
