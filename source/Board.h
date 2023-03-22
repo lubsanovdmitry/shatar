@@ -12,18 +12,18 @@
 #include "Bitboard.h"
 
 struct Piece {
-    static constexpr size_t Pawn = 0;
-    static constexpr size_t Knight = 1;
-    static constexpr size_t Bishop = 2;
-    static constexpr size_t Rook = 3;
-    static constexpr size_t Queen = 4;
-    static constexpr size_t King = 5;
-    static constexpr size_t None = 255;
+    static constexpr uint8_t Pawn = 0;
+    static constexpr uint8_t Knight = 1;
+    static constexpr uint8_t Bishop = 2;
+    static constexpr uint8_t Rook = 3;
+    static constexpr uint8_t Queen = 4;
+    static constexpr uint8_t King = 5;
+    static constexpr uint8_t None = 255;
 };
 
 struct Color {
-    static constexpr size_t White = 0;
-    static constexpr size_t Black = 1;
+    static constexpr uint8_t White = 0;
+    static constexpr uint8_t Black = 1;
 };
 
 class Board {
@@ -46,11 +46,11 @@ public:
 
     void update();
 
-    const Bitboard &look_pieces(size_t color, size_t piece) const {
+    const Bitboard &look_pieces(bool color, uint8_t piece) const {
         return _pieces[color][piece];
     }
 
-    const Bitboard &look_side(size_t color) const {
+    const Bitboard &look_side(bool color) const {
         return _colors[color];
     }
 

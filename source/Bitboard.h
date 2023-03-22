@@ -16,19 +16,19 @@ static constexpr size_t MAGIC = 0x03f79d71b4cb0a89;
  * Implementation of the Bitboard
  */
 
+static constexpr std::array<uint8_t, 64> _BST = {
+        0, 47, 1, 56, 48, 27, 2, 60,
+        57, 49, 41, 37, 28, 16, 3, 61,
+        54, 58, 35, 52, 50, 42, 21, 44,
+        38, 32, 29, 23, 17, 11, 4, 62,
+        46, 55, 26, 59, 40, 36, 15, 53,
+        34, 51, 20, 43, 31, 22, 10, 45,
+        25, 39, 14, 33, 19, 30, 9, 24,
+        13, 18, 8, 12, 7, 6, 5, 63
+};
+
 class Bitboard {
     std::bitset<64> _b;
-
-    static constexpr std::array<size_t, 64> _BST = {
-            0, 47, 1, 56, 48, 27, 2, 60,
-            57, 49, 41, 37, 28, 16, 3, 61,
-            54, 58, 35, 52, 50, 42, 21, 44,
-            38, 32, 29, 23, 17, 11, 4, 62,
-            46, 55, 26, 59, 40, 36, 15, 53,
-            34, 51, 20, 43, 31, 22, 10, 45,
-            25, 39, 14, 33, 19, 30, 9, 24,
-            13, 18, 8, 12, 7, 6, 5, 63
-    };
 
 public:
 
@@ -48,7 +48,7 @@ public:
      * @return true if the bit is set
      */
 
-    bool test(size_t i, size_t j) const {
+    bool test(uint8_t i, uint8_t j) const {
         return _b.test(i * 8 + j);
     }
 
@@ -152,6 +152,8 @@ public:
     size_t find_first();
 
     friend std::ostream& operator<<(std::ostream&os, Bitboard b);
+
+    ~Bitboard() = default;
 };
 
 namespace BitboardColumns {

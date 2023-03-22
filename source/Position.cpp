@@ -4,7 +4,7 @@
 
 #include "Position.h"
 
-Position::Position(std::string_view sv, int move_ctr) {
+Position::Position(std::string_view sv, uint16_t move_ctr) {
     this->board = Board(sv);
     this->move_ctr = move_ctr;
     this->hash = Hash(board, move_ctr % 2);
@@ -12,14 +12,14 @@ Position::Position(std::string_view sv, int move_ctr) {
     this->fifty_moves_ctr = 0;
 }
 
-void Position::add_piece(size_t pos, size_t type, size_t color) {
+void Position::add_piece(uint8_t pos, uint8_t type, bool color) {
     if (!this->board.look_pieces(color, type).test(pos)) {
         this->board.get_pieces(color, type).set(pos);
         this->hash.put_piece(pos, color, type);
     }
 }
 
-void Position::remove_piece(size_t pos, size_t type, size_t color) {
+void Position::remove_piece(uint8_t pos, uint8_t type, bool color) {
     if (this->board.look_pieces(color, type).test(pos)) {
         this->board.get_pieces(color, type).reset(pos);
         this->hash.put_piece(pos, color, type);

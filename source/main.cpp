@@ -23,7 +23,8 @@ int main(int argc, char *argv[]) {
     p.apply_move(Move(to_pos("d2"), to_pos("d4"), Piece::Pawn, Color::White,
                       Piece::None, Color::Black, Move::Flags::None));
     std::cout << p.board << std::endl;
-    AI ai;
+    getchar();
+    AI ai, ai2;
     Human h, h2;
     while (true) {
         MoveList ml = LegalMoveGen::generate(p, p.move_ctr % 2, 0);
@@ -32,9 +33,9 @@ int main(int argc, char *argv[]) {
 
         Move m;
         if (p.move_ctr % 2 == 0) {
-            m = h.getMove(p, p.move_ctr % 2, 0, 0);
+            m = ai2.getMove(p, p.move_ctr % 2, 0, 0);
         } else {
-            m = ai.getMove(p, p.move_ctr % 2, 250, 5 * 1e+2);
+            m = ai.getMove(p, p.move_ctr % 2, 250, 4 * 1e+3);
         }
         if (m.type == Piece::None) {
             std::cout << "Invalid move\n";

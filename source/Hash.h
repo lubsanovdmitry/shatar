@@ -83,6 +83,8 @@ public:
         return value < rhs.value;
     }
 
+    ~Hash() = default;
+
 };
 
 #endif //SHATAR_HASH_H

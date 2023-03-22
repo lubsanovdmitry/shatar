@@ -10,7 +10,7 @@ static int ht_cutoffs;
 
 static std::atomic<bool> stop_search;
 
-std::tuple<int, Move> AI::best_move(const Position &position, size_t side, int depth, HashTable &ht) {
+std::tuple<int, Move> AI::best_move(const Position &position, bool side, int depth, HashTable &ht) {
     if (side == Color::White)
         return AI::alpha_beta_max(position, AI::MIN, AI::MAX, depth, 0, ht);
     return AI::alpha_beta_min(position, AI::MIN, AI::MAX, depth, 0, ht);
@@ -226,7 +226,7 @@ int AI::alpha_beta_max_only_captures(const Position &position, int alpha, int be
     return alpha;
 }
 
-Move AI::getMove(const Position &p, size_t side, int min_time, int max_time) {
+Move AI::getMove(const Position &p, bool side, int min_time, int max_time) {
     std::cout << std::endl;
     Static::evaluate(p.board);
 

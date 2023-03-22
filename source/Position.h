@@ -18,16 +18,16 @@ public:
 
     Board board;
 
-    size_t move_ctr;
+    uint16_t move_ctr;
     Hash hash;
-    size_t fifty_moves_ctr;
+    uint16_t fifty_moves_ctr;
     RecentHistory recent_history;
 
-    Position(std::string_view sv, int move_ctr);
+    Position(std::string_view sv, uint16_t move_ctr);
 
-    void add_piece(size_t pos, size_t type, size_t color);
+    void add_piece(uint8_t pos, uint8_t type, bool color);
 
-    void remove_piece(size_t pos, size_t type, size_t color);
+    void remove_piece(uint8_t pos, uint8_t type, bool color);
 
     void update_ctr();
 

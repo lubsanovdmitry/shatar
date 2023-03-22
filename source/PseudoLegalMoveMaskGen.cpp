@@ -4,7 +4,7 @@
 
 #include "PseudoLegalMoveMaskGen.h"
 
-Bitboard PseudoLegalMoveMaskGen::generate_knight_mask(Board b, size_t p, size_t side, bool only_captures) {
+Bitboard PseudoLegalMoveMaskGen::generate_knight_mask(Board b, uint8_t p, bool side, bool only_captures) {
     Bitboard mv(0);
     /*std::cout << KnightMasks::Masks[p-24];
     if (only_captures) {
@@ -72,7 +72,7 @@ Bitboard PseudoLegalMoveMaskGen::generate_knight_mask(Board b, size_t p, size_t 
     return mv;
 }
 
-Bitboard PseudoLegalMoveMaskGen::generate_king_mask(Board b, size_t p, size_t side, bool only_captures) {
+Bitboard PseudoLegalMoveMaskGen::generate_king_mask(Board b, uint8_t p, bool side, bool only_captures) {
     if (only_captures) {
         return KingMasks::Masks[p] & b.look_side(!side);
     }
@@ -109,7 +109,7 @@ PseudoLegalMoveMaskGen::calc_ray(Board b, size_t p, size_t side, bool only_captu
 
 }
 
-Bitboard PseudoLegalMoveMaskGen::generate_bishop_mask(Board b, size_t p, size_t side, bool only_captures) {
+Bitboard PseudoLegalMoveMaskGen::generate_bishop_mask(Board b, uint8_t p, bool side, bool only_captures) {
     Bitboard mv(0);
     //while (b._pieces[side][Piece::Bishop] != Bitboard(0)) {
     //size_t p = b._pieces[side][Piece::Bishop].find_last();
@@ -192,7 +192,7 @@ Bitboard PseudoLegalMoveMaskGen::generate_bishop_mask(Board b, size_t p, size_t 
         }
 
         for (int s = 0; s < 8; ++s) {
-            int i = x - 1 - s;
+            int i = x + 1 + s;
             int j = y - 1 - s;
             if (i < 0 || j < 0 || j > 7 || i > 7)
                 break;
@@ -211,7 +211,7 @@ Bitboard PseudoLegalMoveMaskGen::generate_bishop_mask(Board b, size_t p, size_t 
 
         for (int s = 0; s < 8; ++s) {
             int i = x - 1 - s;
-            int j = y - 1 - s;
+            int j = y + 1 + s;
             if (i < 0 || j < 0 || j > 7 || i > 7)
                 break;
             if (b._all_pieces.
@@ -228,8 +228,8 @@ Bitboard PseudoLegalMoveMaskGen::generate_bishop_mask(Board b, size_t p, size_t 
         }
 
         for (int s = 0; s < 8; ++s) {
-            int i = x - 1 - s;
-            int j = y - 1 - s;
+            int i = x + 1 + s;
+            int j = y + 1 + s;
             if (i < 0 || j < 0 || j > 7 || i > 7)
                 break;
             if (b._all_pieces.
@@ -247,7 +247,7 @@ Bitboard PseudoLegalMoveMaskGen::generate_bishop_mask(Board b, size_t p, size_t 
     return mv;
 }
 
-Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, size_t p, size_t side, bool only_captures) {
+Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, uint8_t p, bool side, bool only_captures) {
     Bitboard mv(0);
 
     //size_t p = b._pieces[side][Piece::Rook].find_last();
@@ -335,7 +335,7 @@ Bitboard PseudoLegalMoveMaskGen::generate_rook_mask(Board b, size_t p, size_t si
     return mv;
 }
 
-Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, size_t p, size_t side, bool only_captures) {
+Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, uint8_t p, bool side, bool only_captures) {
     Bitboard mv(0);
 
     //size_t p = b._pieces[side][Piece::Rook].find_last();
@@ -455,7 +455,7 @@ Bitboard PseudoLegalMoveMaskGen::generate_queen_mask(Board b, size_t p, size_t s
     return mv;
 }
 
-Bitboard PseudoLegalMoveMaskGen::generate_pawn_mask(Board b, size_t side) {
+Bitboard PseudoLegalMoveMaskGen::generate_pawn_mask(Board b, bool side) {
     if (side == Color::White) {
         auto p = b._pieces[Color::White][Piece::Pawn] >> 1;
         return (b._pieces[Color::White][Piece::Pawn] >> 1) & b._empty_spaces;
@@ -463,35 +463,35 @@ Bitboard PseudoLegalMoveMaskGen::generate_pawn_mask(Board b, size_t side) {
     return (b._pieces[Color::Black][Piece::Pawn] << 1) & b._empty_spaces;
 }
 
-Bitboard PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(Board b, size_t side, bool all) {
+Bitboard PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(Board b, bool side, bool all) {
     if (side == Color::White) {
-        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] >> 7) & BitboardColumns::InversionColumns[0]; //+7
+        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] << 7) & BitboardColumns::InversionColumns[0]; //+7
         if (!all)
             mask = mask & b._colors[Color::Black];
         return mask;
     }
 
-    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] >> 9) & BitboardColumns::InversionColumns[7]; //+9
+    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] << 9) & BitboardColumns::InversionColumns[7]; //+9
     if (!all)
         mask = mask & b._colors[Color::White];
     return mask;
 }
 
-Bitboard PseudoLegalMoveMaskGen::generate_pawn_right_captures_mask(Board b, size_t side, bool all) {
+Bitboard PseudoLegalMoveMaskGen::generate_pawn_right_captures_mask(Board b, bool side, bool all) {
     if (side == Color::White) {
-        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] << 9) & BitboardColumns::InversionColumns[0]; //-9
+        Bitboard mask = (b._pieces[Color::White][Piece::Pawn] >> 9) & BitboardColumns::InversionColumns[0]; //-9
         if (!all)
             mask = mask & b._colors[Color::Black];
         return mask;
     }
 
-    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] << 7) & BitboardColumns::InversionColumns[7]; //-7
+    Bitboard mask = (b._pieces[Color::Black][Piece::Pawn] >> 7) & BitboardColumns::InversionColumns[7]; //-7
     if (!all)
         mask = mask & b._colors[Color::White];
     return mask;
 }
 
-bool PseudoLegalMoveMaskGen::in_danger(Board b, size_t p, size_t side) {
+bool PseudoLegalMoveMaskGen::in_danger(Board b, uint8_t p, bool side) {
 
     Bitboard opposite_pawns_left_captures = generate_pawn_left_captures_mask(b, !side, true);
     Bitboard opposite_pawns_right_captures = generate_pawn_right_captures_mask(b, !side, true);

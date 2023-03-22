@@ -16,7 +16,7 @@
  * @param flag Flags
  */
 
-Move::Move(size_t from, size_t to, size_t type, size_t side, size_t eaten_type, size_t eaten_side, size_t flag) {
+Move::Move(uint8_t from, uint8_t to, uint8_t type, uint8_t side, uint8_t eaten_type, uint8_t eaten_side, uint8_t flag) {
     this->from = from;
     this->to = to;
     this->side = side;

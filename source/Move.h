@@ -13,7 +13,7 @@
 
 class RecentHistory {
 private:
-    std::unordered_map<size_t, size_t> hist;
+    std::unordered_map<size_t, uint16_t> hist;
 public:
     void add(Hash h) { hist[h.value]++; }
 
@@ -27,10 +27,10 @@ public:
     Move() { from = 0, to = 0, type = Piece::None, side = 0, def_type = Piece::None, def_side = 0, flag = Flags::None; }
 
     //Move(uint8_t from, uint8_t to, uint8_t type, uint8_t side, uint8_t eaten_type, uint8_t eaten_side, uint8_t flag = Flags::None);
-    Move(size_t from, size_t to, size_t type, size_t side, size_t eaten_type, size_t eaten_side,
-         size_t flag = Flags::None);
+    Move(uint8_t from, uint8_t to, uint8_t type, uint8_t side, uint8_t eaten_type, uint8_t eaten_side,
+         uint8_t flag = Flags::None);
 
-    size_t from{}, to{}, type{}, side{}, def_type{}, def_side{}, flag{};
+    uint8_t from{}, to{}, type{}, side{}, def_type{}, def_side{}, flag{};
 
     enum Flags {
         None = 0,

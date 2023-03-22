@@ -4,7 +4,7 @@
 
 #include "LegalMoveGen.h"
 
-MoveList LegalMoveGen::generate(Position position, size_t side, bool only_captures) {
+MoveList LegalMoveGen::generate(Position position, bool side, bool only_captures) {
     MoveList moves;
 
     Bitboard pawn_left_captures_mask = PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(position.board, side, false);
@@ -89,8 +89,8 @@ MoveList LegalMoveGen::generate(Position position, size_t side, bool only_captur
     return moves;
 }
 
-void LegalMoveGen::_piece_mask_to_moves(Board b, Bitboard mask, size_t attacker_p, size_t attacker_type,
-                                        size_t attacker_side, MoveList &moves) {
+void LegalMoveGen::_piece_mask_to_moves(Board b, Bitboard mask, uint8_t attacker_p, uint8_t attacker_type,
+                                        bool attacker_side, MoveList &moves) {
     uint8_t defender_p;
     uint8_t defender_type;
 
@@ -115,8 +115,8 @@ void LegalMoveGen::_piece_mask_to_moves(Board b, Bitboard mask, size_t attacker_
     }
 }
 
-void LegalMoveGen::_pawn_mask_to_moves(Board b, Bitboard mask, size_t attacker_side, int8_t attacker_index,
-                                       bool look_for_defender, size_t flag, MoveList &moves) {
+void LegalMoveGen::_pawn_mask_to_moves(Board b, Bitboard mask, bool attacker_side, uint8_t attacker_index,
+                                       bool look_for_defender, uint8_t flag, MoveList &moves) {
     uint8_t defender_p;
     uint8_t defender_type = 255;
 

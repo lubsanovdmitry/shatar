@@ -4,7 +4,7 @@
 
 #include "Players.h"
 
-Move Human::getMove(const Position &p, size_t side, int min_time, int max_time) {
+Move Human::getMove(const Position &p, bool side, int min_time, int max_time) {
     MoveList ml = LegalMoveGen::generate(p, side, 0);
     std::string s;
     std::cin >> s;
