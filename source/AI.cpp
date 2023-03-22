@@ -7,6 +7,7 @@
 static long long evaluated;
 static int maximal_depth;
 static int ht_cutoffs;
+int max_dpt = 100;
 
 static std::atomic<bool> stop_search;
 
@@ -165,7 +166,12 @@ int AI::alpha_beta_min_only_captures(const Position &position, int alpha, int be
         return alpha;
     if (evaluation < beta)
         beta = evaluation;
-
+    if (depth_current > max_dpt) {
+        if (evaluation <= alpha)
+            return alpha;
+        if (evaluation < beta)
+            return beta = evaluation;
+    }
     MoveList moves = LegalMoveGen::generate(position, Color::Black, true);
     //moves = MoveSort::sort(position.board, moves);
 
@@ -202,6 +208,13 @@ int AI::alpha_beta_max_only_captures(const Position &position, int alpha, int be
         return beta;
     if (evaluation > alpha)
         alpha = evaluation;
+
+    if (depth_current > max_dpt) {
+        if (evaluation <= alpha)
+            return beta;
+        if (evaluation < beta)
+            return alpha = evaluation;
+    }
 
     MoveList moves = LegalMoveGen::generate(position, Color::White, true);
     //moves = MoveSort::sort(position.board, moves);

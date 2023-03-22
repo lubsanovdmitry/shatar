@@ -13,7 +13,8 @@ int main(int argc, char *argv[]) {
     //std::cout << (1 << 2);
     std::string normal = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
     std::string super = "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R";
-    std::string tst = "8/3p4/2P5/8/8/pppppPp1/8/8";
+    //std::string tst = "8/3p4/2P5/8/8/pPp1pPp1/8/8";
+    std::string tt = "8/8/8/p7/1P6/2P5/8/8";
     //Position p("rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R", 0);
     Position p(normal, 0);
 
@@ -23,19 +24,20 @@ int main(int argc, char *argv[]) {
     p.apply_move(Move(to_pos("d2"), to_pos("d4"), Piece::Pawn, Color::White,
                       Piece::None, Color::Black, Move::Flags::None));
     std::cout << p.board << std::endl;
-    getchar();
     AI ai, ai2;
     Human h, h2;
     while (true) {
+        //
+        // std::cout << (PseudoLegalMoveMaskGen::generate_pawn_right_captures_mask(p.board, p.move_ctr % 2, 0) | PseudoLegalMoveMaskGen::generate_pawn_left_captures_mask(p.board, p.move_ctr % 2, 0));
         MoveList ml = LegalMoveGen::generate(p, p.move_ctr % 2, 0);
         if (ml.size() == 0)
             break;
 
         Move m;
         if (p.move_ctr % 2 == 0) {
-            m = ai2.getMove(p, p.move_ctr % 2, 0, 0);
+            m = ai.getMove(p, p.move_ctr % 2, 0, 0);
         } else {
-            m = ai.getMove(p, p.move_ctr % 2, 250, 4 * 1e+3);
+            m = ai2.getMove(p, p.move_ctr % 2, 250, 1 * 1e+3);
         }
         if (m.type == Piece::None) {
             std::cout << "Invalid move\n";

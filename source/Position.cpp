@@ -13,15 +13,15 @@ Position::Position(std::string_view sv, uint16_t move_ctr) {
 }
 
 void Position::add_piece(uint8_t pos, uint8_t type, bool color) {
-    if (!this->board.look_pieces(color, type).test(pos)) {
-        this->board.get_pieces(color, type).set(pos);
+    if (!this->board._pieces[color][type].test(pos)) {
+        this->board._pieces[color][type].set(pos);
         this->hash.put_piece(pos, color, type);
     }
 }
 
 void Position::remove_piece(uint8_t pos, uint8_t type, bool color) {
-    if (this->board.look_pieces(color, type).test(pos)) {
-        this->board.get_pieces(color, type).reset(pos);
+    if (this->board._pieces[color][type].test(pos)) {
+        this->board._pieces[color][type].reset(pos);
         this->hash.put_piece(pos, color, type);
     }
 }

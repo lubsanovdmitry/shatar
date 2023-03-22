@@ -15,11 +15,11 @@ MoveList LegalMoveGen::generate(Position position, bool side, bool only_captures
 
     if (side == Color::White) {
         pawn_left_capture = -7;
-        pawn_right_capture = -9;
+        pawn_right_capture = +9;
     }
     else {
-        pawn_left_capture = 9;
-        pawn_right_capture = 7;
+        pawn_left_capture = -9;
+        pawn_right_capture = +7;
     }
 
     LegalMoveGen::_pawn_mask_to_moves(position.board, pawn_left_captures_mask, side, pawn_left_capture, true,Move::Flags::None, moves);
